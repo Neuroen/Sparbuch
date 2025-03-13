@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ProgressBar?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.sparbuch.MainController">
     <HBox>
@@ -35,8 +36,15 @@
         </BorderPane>
         <BorderPane fx:id="controlsPanel">
             <top>
-                <Label>300,0€</Label>
+                <Label fx:id="accountBalance" text="300,0€"/>
             </top>
+            <center>
+                <VBox>
+                    <Label text="Sparziel"/>
+                    <ProgressBar fx:id="saveTargetIndicator" progress="0.0"/>
+                    <Label fx:id="targetProgressLabel" text="0€ von 2000€ erreicht"/>
+                </VBox>
+            </center>
             <bottom>
                 <Button onAction="#OpenTransactionEditor">Geld Buchen</Button>
             </bottom>
