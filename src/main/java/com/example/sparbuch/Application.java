@@ -11,6 +11,7 @@ public class Application extends javafx.application.Application
     @Override
     public void start(Stage stage) throws IOException
     {
+        FileManager fm = new FileManager();
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
