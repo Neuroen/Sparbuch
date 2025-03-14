@@ -1,6 +1,12 @@
 package com.example.sparbuch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SparbuchData
 {
-    //TODO: Datenstruktur für JSON anlegen
+    public List<Account> accounts = new ArrayList<>();
 }
+
+
+
