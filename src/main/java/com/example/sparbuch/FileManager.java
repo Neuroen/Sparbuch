@@ -3,6 +3,7 @@ package com.example.sparbuch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,22 +18,27 @@ public class FileManager
     public FileManager()
     {
         homePath = String.valueOf(Paths.get(System.getProperty("user.home"), "Documents"));
-        homePath += "/Sparbuch/";
+        homePath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+        homePath += "\\Sparbuch\\";
 
         try
         {
-            if (!Files.exists(Path.of(homePath)))
+            File mainDir = new File(homePath);
+            if (!mainDir.exists())
             {
-                File newDir = new File(homePath);
-                newDir.mkdirs();
+                mainDir.mkdirs();
+            }
 
+            File mainFile = new File(homePath + dataFileName);
+            if(!mainFile.exists())
+            {
+                mainFile.createNewFile();
             }
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        System.out.println(homePath);
     }
 
     public void WriteFile(SparbuchData data)
@@ -41,7 +47,7 @@ public class FileManager
         try
         {
             String json = ow.writeValueAsString(data);
-            Files.writeString(Path.of(homePath), json);
+            Files.writeString(Path.of(homePath + dataFileName), json);
         }
         catch (Exception e)
         {
@@ -53,7 +59,7 @@ public class FileManager
     {
         try
         {
-            String json = Files.readString(Path.of(homePath));
+            String json = Files.readString(Path.of(homePath + dataFileName));
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(json, SparbuchData.class);
         }

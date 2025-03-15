@@ -2,12 +2,17 @@ package com.example.sparbuch;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class TransactionEditorView
 {
+    private boolean result = false;
+    private Transaction resultValue;
+    private Transaction selectedTransaction;
+
     Stage stage;
     private TransactionEditorController teController;
 
@@ -21,8 +26,13 @@ public class TransactionEditorView
             teController = fxmlLoader.getController();
             stage.setTitle("Transaktion");
             stage.setScene(scene);
-
-            teController.SetTransactionValue("2000");
+            teController.SetMainView(this);
+            if(selectedTransaction != null)
+            {
+                teController.SetTransactionName(selectedTransaction.name);
+                teController.SetTransactionValue(String.valueOf(selectedTransaction.value));
+                teController.SetTransactionDate(selectedTransaction.date);
+            }
         }
         catch (IOException e)
         {
@@ -36,8 +46,32 @@ public class TransactionEditorView
     }
      */
 
-    public void Show()
+    public void SetResultValue(Transaction resultValue)
     {
-        stage.show();
+        this.resultValue = resultValue;
+    }
+
+    public Transaction GetResultValue()
+    {
+        return resultValue;
+    }
+
+    public void SetSelectedTransaction(Transaction selectedTransaction)
+    {
+        this.selectedTransaction = selectedTransaction;
+    }
+
+    public void Close(boolean state)
+    {
+        result = state;
+        stage.close();
+    }
+
+    public boolean Show()
+    {
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+        System.out.println(result);
+        return result;
     }
 }

@@ -11,6 +11,9 @@
             fx:controller="com.example.sparbuch.TransactionEditorController"
             prefHeight="400.0" prefWidth="600.0">
 
+    <TextField fx:id="transactionNameField"/>
     <TextField fx:id="transactionValueField"/>
     <DatePicker fx:id="transactionDatePicker"/>
+    <Button fx:id="acceptTransactionButton" onAction="#AcceptButtonClicked" text="Buchen"/>
+    <Button fx:id="cancelTransactionButton" onAction="#CancelButtonClicked" text="Abbrechen"/>
 </VBox>
