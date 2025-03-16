@@ -20,9 +20,9 @@ public class AccountEditorView
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("AccountEditorView.fxml"));
         try
         {
-            Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+            Scene scene = new Scene(fxmlLoader.load(), 400, 200);
             aeController = fxmlLoader.getController();
-            stage.setTitle("Transaktion");
+            stage.setTitle("Account");
             stage.setScene(scene);
             aeController.SetMainView(this);
         }

@@ -3,9 +3,10 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="524.0" prefWidth="743.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.MainController">
-    <HBox>
+<AnchorPane prefHeight="524.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.MainController">
+    <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
         <BorderPane>
             <padding>
                 <Insets left="5" right="5" />
@@ -15,9 +16,18 @@
             </center>
             <bottom>
                 <HBox>
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenAccountEditor" text="+" />
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten" />
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenAccountEditor" text="+">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
                 </HBox>
             </bottom>
         </BorderPane>
@@ -30,25 +40,36 @@
             </center>
             <bottom>
                 <HBox>
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+" />
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten" />
-                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen">
+                  <HBox.margin>
+                     <Insets right="5.0" top="10.0" />
+                  </HBox.margin></Button>
                 </HBox>
             </bottom>
         </BorderPane>
-        <BorderPane fx:id="controlsPanel">
-            <top>
-                <Label fx:id="accountBalance" text="300,0€" />
-            </top>
-            <center>
-                <VBox prefHeight="375.0" prefWidth="169.0">
+        <AnchorPane fx:id="controlsPanel">
+            <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Label fx:id="accountBalance" text="300,0€">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+                <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="169.0">
                     <Label text="Sparziel" />
                     <ProgressBar fx:id="saveTargetIndicator" progress="0.0" />
                     <Label fx:id="targetProgressLabel" text="0€ von 2000€ erreicht" />
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
                 </VBox>
-            </center>
-            <bottom>
-            </bottom>
-        </BorderPane>
+            </VBox>
+        </AnchorPane>
     </HBox>
-</VBox>
+</AnchorPane>

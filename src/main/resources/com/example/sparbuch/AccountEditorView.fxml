@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.AccountEditorController">
-    <VBox>
-        <TextField fx:id="accountNameField"/>
-        <TextField fx:id="accountTargetField"/>
-        <Button fx:id="acceptAccountButton" onAction="#AcceptButtonClicked" text="Speichern"/>
-        <Button fx:id="cancelAccountButton" onAction="#CancelButtonClicked" text="Abbrechen"/>
+<AnchorPane prefHeight="205.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.AccountEditorController">
+    <VBox alignment="TOP_CENTER" layoutX="120.0" prefHeight="400.0" prefWidth="349.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
+        <Label text="Account Name:" />
+        <TextField fx:id="accountNameField" />
+        <Label text="Sparziel:" />
+        <TextField fx:id="accountTargetField" />
+        <HBox alignment="CENTER">
+            <Button fx:id="acceptAccountButton" onAction="#AcceptButtonClicked" text="Speichern">
+            <HBox.margin>
+               <Insets right="5.0" top="10.0" />
+            </HBox.margin></Button>
+            <Button fx:id="cancelAccountButton" onAction="#CancelButtonClicked" text="Abbrechen">
+            <HBox.margin>
+               <Insets left="5.0" top="10.0" />
+            </HBox.margin></Button>
+        </HBox>
     </VBox>
 </AnchorPane>

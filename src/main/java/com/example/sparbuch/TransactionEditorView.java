@@ -20,7 +20,7 @@ public class TransactionEditorView
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("TransactionEditorView.fxml"));
         try
         {
-            Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+            Scene scene = new Scene(fxmlLoader.load(), 400, 200);
             teController = fxmlLoader.getController();
             stage.setTitle("Transaktion");
             stage.setScene(scene);

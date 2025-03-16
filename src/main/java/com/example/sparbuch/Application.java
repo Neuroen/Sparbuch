@@ -14,7 +14,7 @@ public class Application extends javafx.application.Application
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 685, 400);
         mainController = fxmlLoader.getController();
         System.out.println(mainController);
         FileManager fm = new FileManager();
@@ -25,6 +25,7 @@ public class Application extends javafx.application.Application
         }
         mainController.SetMainData(mainData);
         mainController.UpdateUI();
+        mainController.Init();
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Sparbuch");
         stage.setScene(scene);

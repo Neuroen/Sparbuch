@@ -6,6 +6,12 @@ import javafx.scene.control.*;
 import java.util.Locale;
 import java.util.Optional;
 
+/*
+    TODO: Zu Implementieren:
+    - Sparziel Funktionalität
+    - Transaktions Buttons disablen bis Account Selected
+    - Account Buttons (Edit und Delete) Disablen bis Account Selected
+ */
 public class MainController
 {
     FileManager fm = new FileManager();
@@ -27,6 +33,12 @@ public class MainController
     private SparbuchData mainData;
 
     private Account selectedAccount;
+
+    public void Init()
+    {
+        accountsList.getSelectionModel().selectFirst();
+        OnSelectedIndexChangedAccountsList();
+    }
 
     public void UpdateUI()
     {
