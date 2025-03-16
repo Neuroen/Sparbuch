@@ -7,24 +7,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TransactionEditorView
+public class AccountEditorView
 {
-    private boolean result = false;
-    private Transaction resultValue;
     private Stage stage;
-    private TransactionEditorController teController;
+    private boolean result = false;
+    private AccountEditorController aeController;
+    private Account resultValue;
 
-    public TransactionEditorView()
+    public AccountEditorView()
     {
         stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("TransactionEditorView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("AccountEditorView.fxml"));
         try
         {
             Scene scene = new Scene(fxmlLoader.load(), 400, 400);
-            teController = fxmlLoader.getController();
+            aeController = fxmlLoader.getController();
             stage.setTitle("Transaktion");
             stage.setScene(scene);
-            teController.SetMainView(this);
+            aeController.SetMainView(this);
         }
         catch (IOException e)
         {
@@ -32,21 +32,20 @@ public class TransactionEditorView
         }
     }
 
-    public void SetResultValue(Transaction resultValue)
+    public void SetResultValue(Account resultValue)
     {
         this.resultValue = resultValue;
     }
 
-    public Transaction GetResultValue()
+    public Account GetResultValue()
     {
-        return resultValue;
+        return this.resultValue;
     }
 
-    public void SetSelectedTransaction(Transaction selectedTransaction)
+    public void SetSelectedAccount(Account selectedAccount)
     {
-        teController.SetTransactionName(selectedTransaction.name);
-        teController.SetTransactionValue(String.valueOf(selectedTransaction.value));
-        teController.SetTransactionDate(selectedTransaction.date);
+        aeController.SetAccountName(selectedAccount.name);
+        aeController.SetAccountTarget(String.valueOf(selectedAccount.saveTarget));
     }
 
     public void Close(boolean state)

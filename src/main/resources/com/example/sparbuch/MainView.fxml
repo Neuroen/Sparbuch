@@ -14,7 +14,11 @@
                 <ListView fx:id="accountsList" onMouseClicked="#OnSelectedIndexChangedAccountsList" />
             </center>
             <bottom>
-                <Label>Accounts: </Label>
+                <HBox>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenAccountEditor" text="+" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen" />
+                </HBox>
             </bottom>
         </BorderPane>
         <BorderPane>
@@ -25,7 +29,11 @@
                 <ListView fx:id="transactionsList" />
             </center>
             <bottom>
-                <Label>Transaktionen: </Label>
+                <HBox>
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten" />
+                    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen" />
+                </HBox>
             </bottom>
         </BorderPane>
         <BorderPane fx:id="controlsPanel">
@@ -40,7 +48,6 @@
                 </VBox>
             </center>
             <bottom>
-                <Button onAction="#OpenTransactionEditor">Geld Buchen</Button>
             </bottom>
         </BorderPane>
     </HBox>

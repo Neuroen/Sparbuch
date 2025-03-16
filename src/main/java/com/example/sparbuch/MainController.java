@@ -1,10 +1,10 @@
 package com.example.sparbuch;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.*;
+
+import java.util.Locale;
+import java.util.Optional;
 
 public class MainController
 {
@@ -52,8 +52,18 @@ public class MainController
         for(int i = 0; i < selectedAccount.transactions.size(); i++)
         {
             Transaction transaction = selectedAccount.transactions.get(i);
-            transactionsList.getItems().add(transaction.name + " " + transaction.value + " " + transaction.date);
+            transactionsList.getItems().add(transaction.name + " " + String.format(Locale.GERMAN, "%.2f", transaction.value) + "€ " + transaction.date);
         }
+    }
+
+    public void CalculateBalance()
+    {
+        float sum = 0.0f;
+        for(Transaction t : selectedAccount.transactions)
+        {
+            sum += t.value;
+        }
+        accountBalance.setText(String.format(Locale.GERMAN, "%.2f", sum) + "€");
     }
 
     public void SetMainData(SparbuchData mainData)
@@ -69,6 +79,7 @@ public class MainController
         {
             selectedAccount.transactions.add(te.GetResultValue());
             LoadTransactionsList();
+            CalculateBalance();
             SaveData();
         }
     }
@@ -85,6 +96,7 @@ public class MainController
             selectedAccount.transactions.remove(transactionSelect);
             selectedAccount.transactions.add(transactionSelect, te.GetResultValue());
             LoadTransactionsList();
+            CalculateBalance();
             SaveData();
         }
     }
@@ -92,14 +104,82 @@ public class MainController
     @FXML
     private void OpenAccountEditor()
     {
-        //TODO: Implementieren
+        AccountEditorView ae = new AccountEditorView();
+        if(ae.Show())
+        {
+            mainData.accounts.add(ae.GetResultValue());
+            LoadAccountsList();
+            SaveData();
+        }
+    }
+
+    @FXML
+    private void EditAccount()
+    {
+        AccountEditorView ae = new AccountEditorView();
+        ae.SetSelectedAccount(selectedAccount);
+        if(ae.Show())
+        {
+            Account editedAccount = ae.GetResultValue();
+            selectedAccount.name = editedAccount.name;
+            selectedAccount.saveTarget = editedAccount.saveTarget;
+            LoadAccountsList();
+            SaveData();
+        }
+    }
+
+    @FXML
+    private void DeleteAccount()
+    {
+        Alert deleteAlert = new Alert(Alert.AlertType.WARNING);
+        deleteAlert.setTitle("Account Löschen!");
+        deleteAlert.setHeaderText("Account Löschen!");
+        deleteAlert.setContentText("Wollen Sie diesen Account Löschen?");
+
+        ButtonType applyButton = new ButtonType("Löschen");
+        ButtonType cancelButton = new ButtonType("Abbrechen");
+        deleteAlert.getButtonTypes().setAll(applyButton, cancelButton);
+
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+        if(result.get() == applyButton)
+        {
+            mainData.accounts.remove(accountsList.getSelectionModel().getSelectedIndex());
+            LoadAccountsList();
+            SaveData();
+        }
+    }
+    @FXML
+    private void DeleteTransaction()
+    {
+        Alert deleteAlert = new Alert(Alert.AlertType.WARNING);
+        deleteAlert.setTitle("Transaktion Löschen!");
+        deleteAlert.setHeaderText("Transaktion Löschen!");
+        deleteAlert.setContentText("Wollen Sie diese Transaktion Löschen?");
+
+        ButtonType applyButton = new ButtonType("Löschen");
+        ButtonType cancelButton = new ButtonType("Abbrechen");
+        deleteAlert.getButtonTypes().setAll(applyButton, cancelButton);
+
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+        if(result.get() == applyButton)
+        {
+            selectedAccount.transactions.remove(transactionsList.getSelectionModel().getSelectedIndex());
+            LoadTransactionsList();
+            CalculateBalance();
+            SaveData();
+        }
     }
 
     @FXML
     private void OnSelectedIndexChangedAccountsList()
     {
-        selectedAccount = mainData.accounts.get(accountsList.getSelectionModel().getSelectedIndex());
-        LoadTransactionsList();
+        if(accountsList.getSelectionModel().getSelectedIndex() != -1)
+        {
+            selectedAccount = mainData.accounts.get(accountsList.getSelectionModel().getSelectedIndex());
+            LoadTransactionsList();
+            CalculateBalance();
+        }
+
     }
 
     private void SaveData()
