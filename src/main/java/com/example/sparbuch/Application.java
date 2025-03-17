@@ -13,6 +13,7 @@ public class Application extends javafx.application.Application
     @Override
     public void start(Stage stage) throws IOException
     {
+        stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 685, 400);
         mainController = fxmlLoader.getController();
@@ -24,7 +25,7 @@ public class Application extends javafx.application.Application
             mainData = new SparbuchData();
         }
         mainController.SetMainData(mainData);
-        mainController.UpdateUI();
+        mainController.UpdateUI(true);
         mainController.Init();
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Sparbuch");

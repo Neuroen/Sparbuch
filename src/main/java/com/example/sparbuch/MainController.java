@@ -19,11 +19,13 @@ public class MainController
     private ListView<String> accountsList;
 
     @FXML
-    private ListView<String> transactionsList;
+    private ListView<String> transactionsList; //TODO: von ListView zur TableView machen
 
     @FXML
     private Label accountBalance;
 
+    @FXML
+    private Label targetHeaderLabel;
     @FXML
     private Label targetProgressLabel;
 
@@ -40,12 +42,33 @@ public class MainController
         OnSelectedIndexChangedAccountsList();
     }
 
-    public void UpdateUI()
+    public void UpdateUI(boolean updateAccountsList)
     {
-        LoadAccountsList();
+        if(updateAccountsList)
+        {
+            LoadAccountsList();
+        }
+
         if(selectedAccount != null)
         {
             LoadTransactionsList();
+            SetBalanceText(CalculateBalance());
+            if(selectedAccount.saveTarget != 0.0f)
+            {
+                saveTargetIndicator.setVisible(true);
+                targetProgressLabel.setVisible(true);
+                targetHeaderLabel.setVisible(true);
+                SetSaveTarget(CalculateSaveTarget());
+                String balanceFormattet = String.format(Locale.GERMAN, "%.2f", CalculateBalance());
+                String targetFormattet = String.format(Locale.GERMAN, "%.2f", selectedAccount.saveTarget);
+                targetProgressLabel.setText(balanceFormattet + "€ von " + targetFormattet + "€");
+            }
+            else
+            {
+                saveTargetIndicator.setVisible(false);
+                targetProgressLabel.setVisible(false);
+                targetHeaderLabel.setVisible(false);
+            }
         }
     }
 
@@ -68,14 +91,35 @@ public class MainController
         }
     }
 
-    public void CalculateBalance()
+    public void SetBalanceText(float sum)
+    {
+        accountBalance.setText(String.format(Locale.GERMAN, "%.2f", sum) + "€");
+    }
+
+    public void SetSaveTarget(float percent)
+    {
+        saveTargetIndicator.setProgress(percent);
+    }
+
+    public float CalculateBalance()
     {
         float sum = 0.0f;
         for(Transaction t : selectedAccount.transactions)
         {
             sum += t.value;
         }
-        accountBalance.setText(String.format(Locale.GERMAN, "%.2f", sum) + "€");
+        return sum;
+    }
+
+    private float CalculateSaveTarget()
+    {
+        float balance = CalculateBalance();
+        float targetPercent = (balance / (selectedAccount.saveTarget / 100)) / 100;
+        if(targetPercent > 1.0f)
+        {
+            targetPercent = 1.0f;
+        }
+        return targetPercent;
     }
 
     public void SetMainData(SparbuchData mainData)
@@ -90,8 +134,7 @@ public class MainController
         if(te.Show())
         {
             selectedAccount.transactions.add(te.GetResultValue());
-            LoadTransactionsList();
-            CalculateBalance();
+            UpdateUI(false);
             SaveData();
         }
     }
@@ -107,8 +150,7 @@ public class MainController
         {
             selectedAccount.transactions.remove(transactionSelect);
             selectedAccount.transactions.add(transactionSelect, te.GetResultValue());
-            LoadTransactionsList();
-            CalculateBalance();
+            UpdateUI(false);
             SaveData();
         }
     }
@@ -120,7 +162,7 @@ public class MainController
         if(ae.Show())
         {
             mainData.accounts.add(ae.GetResultValue());
-            LoadAccountsList();
+            UpdateUI(true);
             SaveData();
         }
     }
@@ -135,7 +177,7 @@ public class MainController
             Account editedAccount = ae.GetResultValue();
             selectedAccount.name = editedAccount.name;
             selectedAccount.saveTarget = editedAccount.saveTarget;
-            LoadAccountsList();
+            UpdateUI(true);
             SaveData();
         }
     }
@@ -156,7 +198,7 @@ public class MainController
         if(result.get() == applyButton)
         {
             mainData.accounts.remove(accountsList.getSelectionModel().getSelectedIndex());
-            LoadAccountsList();
+            UpdateUI(true);
             SaveData();
         }
     }
@@ -176,8 +218,7 @@ public class MainController
         if(result.get() == applyButton)
         {
             selectedAccount.transactions.remove(transactionsList.getSelectionModel().getSelectedIndex());
-            LoadTransactionsList();
-            CalculateBalance();
+            UpdateUI(false);
             SaveData();
         }
     }
@@ -188,8 +229,7 @@ public class MainController
         if(accountsList.getSelectionModel().getSelectedIndex() != -1)
         {
             selectedAccount = mainData.accounts.get(accountsList.getSelectionModel().getSelectedIndex());
-            LoadTransactionsList();
-            CalculateBalance();
+            UpdateUI(false);
         }
 
     }

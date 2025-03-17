@@ -17,6 +17,7 @@ public class AccountEditorView
     public AccountEditorView()
     {
         stage = new Stage();
+        stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("AccountEditorView.fxml"));
         try
         {

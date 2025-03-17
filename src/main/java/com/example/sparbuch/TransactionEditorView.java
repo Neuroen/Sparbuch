@@ -17,6 +17,7 @@ public class TransactionEditorView
     public TransactionEditorView()
     {
         stage = new Stage();
+        stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("TransactionEditorView.fxml"));
         try
         {
