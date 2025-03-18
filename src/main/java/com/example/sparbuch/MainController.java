@@ -91,6 +91,15 @@ public class MainController
                 targetHeaderLabel.setVisible(false);
             }
         }
+        else
+        {
+            transactionsList.getItems().clear();
+            accountBalance.setText("");
+            saveTargetIndicator.setVisible(false);
+            targetProgressLabel.setVisible(false);
+            targetHeaderLabel.setVisible(false);
+        }
+        UpdateButtons();
     }
 
     private void UpdateButtons()
@@ -246,6 +255,7 @@ public class MainController
         Optional<ButtonType> result = deleteAlert.showAndWait();
         if(result.get() == applyButton)
         {
+            selectedAccount = null;
             mainData.accounts.remove(accountsList.getSelectionModel().getSelectedIndex());
             UpdateUI(true);
             SaveData();
