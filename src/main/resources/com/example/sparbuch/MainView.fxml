@@ -54,9 +54,9 @@
                   <Font size="24.0" />
                </font></Label>
                 <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="169.0">
-                    <Label fx:id="targetHeaderLabel" text="Sparziel" />
-                    <ProgressBar fx:id="saveTargetIndicator" progress="0.0" />
-                    <Label fx:id="targetProgressLabel" text="0€ von 2000€ erreicht" />
+                    <Label fx:id="targetHeaderLabel" visible="false" text="Sparziel" />
+                    <ProgressBar fx:id="saveTargetIndicator" visible="false" progress="0.0" />
+                    <Label fx:id="targetProgressLabel" visible="false" text="0€ von 2000€ erreicht" />
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>

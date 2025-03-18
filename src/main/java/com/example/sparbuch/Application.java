@@ -13,7 +13,7 @@ public class Application extends javafx.application.Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("dollar-icon.png"))));
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 685, 400);

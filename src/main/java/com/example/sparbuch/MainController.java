@@ -101,11 +101,13 @@ public class MainController
         {
             editAccountButton.setDisable(false);
             deleteAccountButton.setDisable(false);
+            createTransactionButton.setDisable(false);
         }
         else
         {
             editAccountButton.setDisable(true);
             deleteAccountButton.setDisable(true);
+            createTransactionButton.setDisable(true);
         }
 
         if(transactionsList.getSelectionModel().getSelectedIndex() != -1)
@@ -116,7 +118,6 @@ public class MainController
         }
         else
         {
-            createTransactionButton.setDisable(true);
             editTransactionButton.setDisable(true);
             deleteTransactionButton.setDisable(true);
         }
