@@ -60,6 +60,10 @@ public class FileManager
         try
         {
             String json = Files.readString(Path.of(homePath + dataFileName));
+            if(json.isEmpty())
+            {
+                return null;
+            }
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(json, SparbuchData.class);
         }
