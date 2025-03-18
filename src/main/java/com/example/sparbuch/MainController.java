@@ -2,16 +2,11 @@ package com.example.sparbuch;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.Locale;
 import java.util.Optional;
 
-/*
-    TODO: Zu Implementieren:
-    - Sparziel Funktionalität
-    - Transaktions Buttons disablen bis Account Selected
-    - Account Buttons (Edit und Delete) Disablen bis Account Selected
- */
 public class MainController
 {
     FileManager fm = new FileManager();
@@ -19,15 +14,31 @@ public class MainController
     private ListView<String> accountsList;
 
     @FXML
-    private ListView<String> transactionsList; //TODO: von ListView zur TableView machen
+    private TableView transactionsList;
 
     @FXML
     private Label accountBalance;
 
     @FXML
     private Label targetHeaderLabel;
+
     @FXML
     private Label targetProgressLabel;
+
+    @FXML
+    private Button editAccountButton;
+
+    @FXML
+    private Button deleteAccountButton;
+
+    @FXML
+    private Button createTransactionButton;
+
+    @FXML
+    private Button editTransactionButton;
+
+    @FXML
+    private Button deleteTransactionButton;
 
     @FXML
     private ProgressBar saveTargetIndicator;
@@ -38,6 +49,15 @@ public class MainController
 
     public void Init()
     {
+        transactionsList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        TableColumn<Transaction, String> nameColumn = new TableColumn<>("Bezeichnung");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Transaction, Float> valueColumn = new TableColumn<>("Wert");
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        TableColumn<Transaction, String> dateColumn = new TableColumn<>("Datum");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        transactionsList.getColumns().addAll(nameColumn, valueColumn, dateColumn);
+
         accountsList.getSelectionModel().selectFirst();
         OnSelectedIndexChangedAccountsList();
     }
@@ -51,6 +71,9 @@ public class MainController
 
         if(selectedAccount != null)
         {
+            editAccountButton.setDisable(false);
+            deleteAccountButton.setDisable(false);
+
             LoadTransactionsList();
             SetBalanceText(CalculateBalance());
             if(selectedAccount.saveTarget != 0.0f)
@@ -59,9 +82,9 @@ public class MainController
                 targetProgressLabel.setVisible(true);
                 targetHeaderLabel.setVisible(true);
                 SetSaveTarget(CalculateSaveTarget());
-                String balanceFormattet = String.format(Locale.GERMAN, "%.2f", CalculateBalance());
-                String targetFormattet = String.format(Locale.GERMAN, "%.2f", selectedAccount.saveTarget);
-                targetProgressLabel.setText(balanceFormattet + "€ von " + targetFormattet + "€");
+                String balanceFormatted = String.format(Locale.GERMAN, "%.2f", CalculateBalance());
+                String targetFormatted = String.format(Locale.GERMAN, "%.2f", selectedAccount.saveTarget);
+                targetProgressLabel.setText(balanceFormatted + "€ von " + targetFormatted + "€");
             }
             else
             {
@@ -69,6 +92,33 @@ public class MainController
                 targetProgressLabel.setVisible(false);
                 targetHeaderLabel.setVisible(false);
             }
+        }
+    }
+
+    private void UpdateButtons()
+    {
+        if(selectedAccount != null)
+        {
+            editAccountButton.setDisable(false);
+            deleteAccountButton.setDisable(false);
+        }
+        else
+        {
+            editAccountButton.setDisable(true);
+            deleteAccountButton.setDisable(true);
+        }
+
+        if(transactionsList.getSelectionModel().getSelectedIndex() != -1)
+        {
+            createTransactionButton.setDisable(false);
+            editTransactionButton.setDisable(false);
+            deleteTransactionButton.setDisable(false);
+        }
+        else
+        {
+            createTransactionButton.setDisable(true);
+            editTransactionButton.setDisable(true);
+            deleteTransactionButton.setDisable(true);
         }
     }
 
@@ -87,7 +137,7 @@ public class MainController
         for(int i = 0; i < selectedAccount.transactions.size(); i++)
         {
             Transaction transaction = selectedAccount.transactions.get(i);
-            transactionsList.getItems().add(transaction.name + " " + String.format(Locale.GERMAN, "%.2f", transaction.value) + "€ " + transaction.date);
+            transactionsList.getItems().add(transaction);
         }
     }
 
@@ -231,7 +281,13 @@ public class MainController
             selectedAccount = mainData.accounts.get(accountsList.getSelectionModel().getSelectedIndex());
             UpdateUI(false);
         }
+        UpdateButtons();
+    }
 
+    @FXML
+    private void OnSelectedIndexChangedTransactionsList()
+    {
+        UpdateButtons();
     }
 
     private void SaveData()

@@ -17,11 +17,11 @@
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten">
+                <Button fx:id="editAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten">
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen">
+                <Button fx:id="deleteAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen">
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
@@ -31,17 +31,17 @@
             <padding>
                 <Insets left="5" right="5" />
             </padding>
-            <ListView fx:id="transactionsList" />
+            <TableView fx:id="transactionsList" onMouseClicked="#OnSelectedIndexChangedTransactionsList" />
             <HBox>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+">
+                <Button fx:id="createTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+">
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten">
+                <Button fx:id="editTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten">
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen">
+                <Button fx:id="deleteTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen">
                 <HBox.margin>
                     <Insets right="5.0" top="10.0" />
                 </HBox.margin></Button>
