@@ -5,63 +5,68 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="560.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.MainController">
-    <HBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <padding>
-                <Insets left="5" right="5" />
-            </padding>
-            <ListView fx:id="accountsList" onMouseClicked="#OnSelectedIndexChangedAccountsList" />
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.MainController">
+     <VBox layoutY="20.0" maxWidth="-Infinity" prefHeight="460.0" prefWidth="240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0">
+         <padding>
+             <Insets left="5" right="5" />
+         </padding>
+         <ListView fx:id="accountsList" onMouseClicked="#OnSelectedIndexChangedAccountsList" VBox.vgrow="ALWAYS" />
+         <HBox>
+             <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenAccountEditor" text="+">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+             <Button fx:id="editAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+             <Button fx:id="deleteAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+         </HBox>
+     </VBox>
+     <VBox layoutX="240.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="460.0" prefWidth="270.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="197.0" AnchorPane.topAnchor="20.0">
+         <padding>
+             <Insets left="5" right="5" />
+         </padding>
+         <TableView fx:id="transactionsList" onMouseClicked="#OnSelectedIndexChangedTransactionsList" VBox.vgrow="ALWAYS" />
             <HBox>
-                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#OpenAccountEditor" text="+">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-                <Button fx:id="editAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditAccount" text="Bearbeiten">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-                <Button fx:id="deleteAccountButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteAccount" text="Löschen">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-            </HBox>
-        </VBox>
-        <VBox>
-            <padding>
-                <Insets left="5" right="5" />
-            </padding>
-            <TableView fx:id="transactionsList" onMouseClicked="#OnSelectedIndexChangedTransactionsList" />
-            <HBox>
-                <Button fx:id="createTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-                <Button fx:id="editTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-                <Button fx:id="deleteTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen">
-                <HBox.margin>
-                    <Insets right="5.0" top="10.0" />
-                </HBox.margin></Button>
-            </HBox>
-        </VBox>
-        <AnchorPane fx:id="controlsPanel">
-            <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <Label fx:id="accountBalance" text="">
-               <font>
-                  <Font size="24.0" />
-               </font></Label>
-                <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="169.0">
-                    <Label fx:id="targetHeaderLabel" visible="false" text="Sparziel" />
-                    <ProgressBar fx:id="saveTargetIndicator" visible="false" progress="0.0" />
-                    <Label fx:id="targetProgressLabel" visible="false" text="0€ von 2000€ erreicht" />
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
-                </VBox>
-            </VBox>
-        </AnchorPane>
-    </HBox>
+             <Button fx:id="createTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#OpenTransactionEditor" text="+">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+             <Button fx:id="editTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#EditTransaction" text="Bearbeiten">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+             <Button fx:id="deleteTransactionButton" alignment="CENTER" contentDisplay="CENTER" onAction="#DeleteTransaction" text="Löschen">
+             <HBox.margin>
+                 <Insets right="5.0" top="10.0" />
+             </HBox.margin>
+         </Button>
+         </HBox>
+     </VBox>
+     <AnchorPane fx:id="controlsPanel" layoutX="506.0" layoutY="20.0" prefHeight="460.0" prefWidth="201.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+         <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+             <Label fx:id="accountBalance" text="">
+            <font>
+               <Font size="24.0" />
+            </font>
+         </Label>
+             <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="169.0">
+                 <Label fx:id="targetHeaderLabel" text="Sparziel" visible="false" />
+                 <ProgressBar fx:id="saveTargetIndicator" progress="0.0" visible="false" />
+                 <Label fx:id="targetProgressLabel" text="0€ von 2000€ erreicht" visible="false" />
+            <VBox.margin>
+               <Insets top="50.0" />
+            </VBox.margin>
+             </VBox>
+         </VBox>
+     </AnchorPane>
 </AnchorPane>

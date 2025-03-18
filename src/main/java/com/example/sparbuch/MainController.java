@@ -3,7 +3,6 @@ package com.example.sparbuch;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.util.Locale;
 import java.util.Optional;
 
@@ -57,7 +56,6 @@ public class MainController
         TableColumn<Transaction, String> dateColumn = new TableColumn<>("Datum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         transactionsList.getColumns().addAll(nameColumn, valueColumn, dateColumn);
-
         accountsList.getSelectionModel().selectFirst();
         OnSelectedIndexChangedAccountsList();
     }
