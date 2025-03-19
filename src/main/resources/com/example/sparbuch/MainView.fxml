@@ -50,6 +50,10 @@
                  <Insets right="5.0" top="10.0" />
              </HBox.margin>
          </Button>
+         <Button fx:id="templateEditorButton" alignment="CENTER" contentDisplay="CENTER" layoutX="118.0" layoutY="20.0" onAction="#OpenTemplateEditor" text="Templates">
+            <HBox.margin>
+               <Insets right="5.0" top="10.0" />
+            </HBox.margin></Button>
          </HBox>
      </VBox>
      <AnchorPane fx:id="controlsPanel" layoutX="506.0" layoutY="20.0" prefHeight="460.0" prefWidth="201.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">

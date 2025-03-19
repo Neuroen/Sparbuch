@@ -3,6 +3,9 @@ package com.example.sparbuch;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -189,6 +192,18 @@ public class MainController
     private void OpenTransactionEditor()
     {
         TransactionEditorView te = new TransactionEditorView();
+        List<String> templates = new ArrayList<>();
+        for(int i = 0; i < mainData.templates.size(); i++)
+        {
+            templates.add(mainData.templates.get(i).name);
+        }
+        ChoiceDialog<String> cd = new ChoiceDialog<>(templates.getFirst(), templates);
+        cd.setTitle("Template auswahl");
+        cd.setContentText("Wähle ein Template aus");
+        Optional<String> result = cd.showAndWait();
+        //TODO: Den Gewählten index holen und die Template Transaction übergeben
+
+
         if(te.Show())
         {
             selectedAccount.transactions.add(te.GetResultValue());
@@ -236,6 +251,17 @@ public class MainController
             selectedAccount.name = editedAccount.name;
             selectedAccount.saveTarget = editedAccount.saveTarget;
             UpdateUI(true);
+            SaveData();
+        }
+    }
+
+    @FXML
+    private void OpenTemplateEditor()
+    {
+        TemplateEditorView te = new TemplateEditorView();
+        if(te.Show())
+        {
+            mainData.templates.add(te.GetResultValue());
             SaveData();
         }
     }
