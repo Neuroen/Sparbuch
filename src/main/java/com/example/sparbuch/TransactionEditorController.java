@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -68,6 +69,22 @@ public class TransactionEditorController
     public void CancelButtonClicked()
     {
         mainView.Close(false);
+    }
+
+    public void CreateTemplateButtonClicked()
+    {
+        TextInputDialog td = new TextInputDialog();
+        td.showAndWait();
+        String templateName = td.getEditor().getText();
+        TransactionTemplate newTemplate = new TransactionTemplate();
+        newTemplate.name = templateName;
+        String transactionName = transactionNameField.getText();
+        LocalDate date = transactionDatePicker.getValue();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String dateString = formatter.format(date);
+        float value = Float.parseFloat(transactionValueField.getText());
+        newTemplate.exampleTransaction = new Transaction(transactionName, dateString, value);
+        //SparbuchData.templates.add(newTemplate);
     }
 
     public void SetTransactionName(String name)

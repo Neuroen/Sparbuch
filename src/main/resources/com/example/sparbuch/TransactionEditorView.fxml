@@ -24,6 +24,7 @@
             <HBox.margin>
                <Insets left="5.0" top="10.0" />
             </HBox.margin></Button>
+            <Button fx:id="createNewTemplate" onAction="#CreateTemplateButtonClicked" text="Als Template speichern"/>
         </HBox>
     </VBox>
 </AnchorPane>
