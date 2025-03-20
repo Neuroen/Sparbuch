@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -49,8 +51,16 @@ public class MainController
 
     private Account selectedAccount;
 
+    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.GERMAN);
+
+    private DecimalFormat decimalFormat;
+
+
     public void Init()
     {
+        symbols.setGroupingSeparator('.');
+        decimalFormat = new DecimalFormat("#,##0.00",symbols);
+
         transactionsList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         TableColumn<Transaction, String> nameColumn = new TableColumn<>("Bezeichnung");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -83,6 +93,7 @@ public class MainController
                 targetProgressLabel.setVisible(true);
                 targetHeaderLabel.setVisible(true);
                 SetSaveTarget(CalculateSaveTarget());
+
                 String balanceFormatted = String.format(Locale.GERMAN, "%.2f", CalculateBalance());
                 String targetFormatted = String.format(Locale.GERMAN, "%.2f", selectedAccount.saveTarget);
                 targetProgressLabel.setText(balanceFormatted + "€ von " + targetFormatted + "€");
@@ -154,7 +165,7 @@ public class MainController
 
     public void SetBalanceText(float sum)
     {
-        accountBalance.setText(String.format(Locale.GERMAN, "%.2f", sum) + "€");
+        accountBalance.setText(decimalFormat.format(sum) + "€");
     }
 
     public void SetSaveTarget(float percent)
@@ -193,15 +204,26 @@ public class MainController
     {
         TransactionEditorView te = new TransactionEditorView();
         List<String> templates = new ArrayList<>();
+        templates.add("Kein Template verwenden");
         for(int i = 0; i < mainData.templates.size(); i++)
         {
             templates.add(mainData.templates.get(i).name);
         }
         ChoiceDialog<String> cd = new ChoiceDialog<>(templates.getFirst(), templates);
         cd.setTitle("Template auswahl");
+        cd.setHeaderText("Transaktions Template");
         cd.setContentText("Wähle ein Template aus");
         Optional<String> result = cd.showAndWait();
-        //TODO: Den Gewählten index holen und die Template Transaction übergeben
+        if(result.isEmpty())
+        {
+            return;
+        }
+
+        int selectedTemplate = (!result.isEmpty()) ? templates.indexOf(result.get()) : 0;
+        if((!result.isEmpty()) && (templates.indexOf(result.get()) > 0))
+        {
+            te.SetSelectedTransaction(mainData.templates.get(selectedTemplate - 1).exampleTransaction);
+        }
 
 
         if(te.Show())
@@ -259,11 +281,9 @@ public class MainController
     private void OpenTemplateEditor()
     {
         TemplateEditorView te = new TemplateEditorView();
-        if(te.Show())
-        {
-            mainData.templates.add(te.GetResultValue());
-            SaveData();
-        }
+        te.Show(mainData.templates);
+        mainData.templates = te.GetResultValue();
+        SaveData();
     }
 
     @FXML

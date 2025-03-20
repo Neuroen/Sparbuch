@@ -6,11 +6,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TemplateEditorView
 {
-    private boolean result = false;
-    private TransactionTemplate resultValue;
+    private int selectedTemplate = -1;
+    private List<TransactionTemplate> resultValue;
     private Stage stage;
     private TemplateEditorController teController;
 
@@ -33,33 +34,51 @@ public class TemplateEditorView
         }
     }
 
-    public void SetResultValue(TransactionTemplate resultValue)
+    public void AddToResultValue(TransactionTemplate newElement)
     {
-        this.resultValue = resultValue;
+        resultValue.add(newElement);
     }
 
-    public TransactionTemplate GetResultValue()
+    public void UpdateElement(int index, TransactionTemplate newElement)
+    {
+        resultValue.set(index, newElement);
+    }
+
+    public void DeleteFromResultValue(int index)
+    {
+        resultValue.remove(index);
+    }
+
+    public List<TransactionTemplate> GetResultValue()
     {
         return resultValue;
     }
 
-    public void SetSelectedTransaction(TransactionTemplate selectedTemplate)
+    public void SetSelectedTemplate(int selectedTemplate)
     {
-        teController.SetTransactionName(selectedTemplate.exampleTransaction.name);
-        teController.SetTransactionValue(String.valueOf(selectedTemplate.exampleTransaction.value));
-        teController.SetTemplateName(selectedTemplate.name);
+        this.selectedTemplate = selectedTemplate;
     }
 
-    public void Close(boolean state)
+    public int GetSelectedTemplate()
     {
-        result = state;
+        return selectedTemplate;
+    }
+
+    public TransactionTemplate GetTemplateFromIndex(int index)
+    {
+        return resultValue.get(index);
+    }
+
+    public void Close()
+    {
         stage.close();
     }
 
-    public boolean Show()
+    public void Show(List<TransactionTemplate> templateList)
     {
+        resultValue = templateList;
+        teController.SetTemplateList(templateList);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
-        return result;
     }
 }

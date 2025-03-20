@@ -1,11 +1,12 @@
 package com.example.sparbuch;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 
 public class TemplateEditorController
 {
@@ -15,6 +16,11 @@ public class TemplateEditorController
     public TextField transactionValueField;
     @FXML
     public TextField templateNameField;
+    @FXML
+    public ComboBox<String> templateListBox;
+    @FXML
+    public Button deleteTemplateButton;
+
     public TemplateEditorView mainView;
 
     @FXML
@@ -33,12 +39,7 @@ public class TemplateEditorController
 
         if(!transactionValueField.getText().isEmpty())
         {
-            //TODO: Implementiere benachrichtigung das Feld nicht leer sein darf
             newTransaction.value = Float.parseFloat(transactionValueField.getText());
-        }
-        else
-        {
-            return;
         }
 
         TransactionTemplate newTemplate = new TransactionTemplate();
@@ -46,34 +47,84 @@ public class TemplateEditorController
         {
             newTemplate.name = templateNameField.getText();
         }
+        else
+        {
+            return;
+        }
         newTemplate.exampleTransaction = newTransaction;
-        mainView.SetResultValue(newTemplate);
-        mainView.Close(true);
+        int selectedTemplate = templateListBox.getSelectionModel().getSelectedIndex() - 1;
+        if(selectedTemplate == -1)
+        {
+            mainView.AddToResultValue(newTemplate);
+        }
+        else
+        {
+            mainView.UpdateElement(selectedTemplate, newTemplate);
+        }
+        mainView.Close();
     }
 
     @FXML
     private void CancelButtonClicked()
     {
-        mainView.Close(false);
+        mainView.Close();
     }
 
-    public void SetTemplateName(String name)
+    public void SetTemplateList(List<TransactionTemplate> templateList)
     {
-        templateNameField.setText(name);
+        templateListBox.getItems().add("Neues Template");
+        for(TransactionTemplate template : templateList)
+        {
+            templateListBox.getItems().add(template.name);
+        }
+        templateListBox.getSelectionModel().select(0);
     }
 
-    public void SetTransactionName(String name)
+    public void DeleteTemplate()
     {
-        transactionNameField.setText(name);
-    }
+        Alert deleteAlert = new Alert(Alert.AlertType.WARNING);
+        deleteAlert.setTitle("Template Löschen!");
+        deleteAlert.setHeaderText("Template Löschen!");
+        deleteAlert.setContentText("Wollen Sie dieses Template Löschen?");
 
-    public void SetTransactionValue(String value)
-    {
-        transactionValueField.setText(value);
+        ButtonType applyButton = new ButtonType("Löschen");
+        ButtonType cancelButton = new ButtonType("Abbrechen");
+        deleteAlert.getButtonTypes().setAll(applyButton, cancelButton);
+
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+        if(result.get() == applyButton)
+        {
+            int selectedTemplate = templateListBox.getSelectionModel().getSelectedIndex() - 1;
+            if (selectedTemplate != -1)
+            {
+                mainView.DeleteFromResultValue(selectedTemplate);
+                templateListBox.getItems().remove(selectedTemplate + 1);
+            }
+        }
     }
 
     public void SetMainView(TemplateEditorView mainView)
     {
         this.mainView = mainView;
+    }
+
+    public void OnSelectedTemplateChanged()
+    {
+        int selectedIndex = templateListBox.getSelectionModel().getSelectedIndex() - 1;
+        if(selectedIndex == -1)
+        {
+            templateNameField.clear();
+            transactionNameField.clear();
+            transactionValueField.clear();
+            deleteTemplateButton.setDisable(true);
+        }
+        else
+        {
+            TransactionTemplate selectedTemplate = mainView.GetTemplateFromIndex(selectedIndex);
+            templateNameField.setText(selectedTemplate.name);
+            transactionNameField.setText(selectedTemplate.exampleTransaction.name);
+            transactionValueField.setText(String.valueOf(selectedTemplate.exampleTransaction.value));
+            deleteTemplateButton.setDisable(false);
+        }
     }
 }
