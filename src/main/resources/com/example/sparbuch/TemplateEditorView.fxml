@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sparbuch.TemplateEditorController">
+    <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="0.0">
+        <ComboBox fx:id="templateListBox" onAction="#OnSelectedTemplateChanged" />
+        <Label text="Name des Templates: " />
+        <TextField fx:id="templateNameField" />
+        <Label text="Bezeichnung: " />
+        <TextField fx:id="transactionNameField" />
+        <Label text="Wert:" />
+        <TextField fx:id="transactionValueField" />
+        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="452.0">
+            <Button fx:id="acceptTemplateButton" onAction="#AcceptButtonClicked" prefWidth="100.0" text="Speichern">
+                <HBox.margin>
+                    <Insets right="5.0" top="10.0" />
+                </HBox.margin></Button>
+            <Button fx:id="cancelTemplateButton" onAction="#CancelButtonClicked" prefWidth="100.0" text="Abbrechen">
+                <HBox.margin>
+                    <Insets left="5.0" top="10.0" />
+                </HBox.margin></Button>
+         <Button fx:id="deleteTemplateButton" disable="true" layoutX="213.0" layoutY="20.0" onAction="#DeleteTemplate" prefHeight="25.0" prefWidth="100.0" text="Löschen">
+            <HBox.margin>
+               <Insets left="5.0" top="10.0" />
+            </HBox.margin>
+         </Button>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

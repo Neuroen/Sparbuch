@@ -16,7 +16,7 @@ public class Application extends javafx.application.Application
         //stage.setResizable(false);
         stage.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("dollar-icon.png"))));
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 685, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         MainController mainController = fxmlLoader.getController();
         System.out.println(mainController);
         FileManager fm = new FileManager();

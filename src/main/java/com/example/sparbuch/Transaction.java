@@ -3,6 +3,8 @@ package com.example.sparbuch;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class Transaction
@@ -39,6 +41,9 @@ public class Transaction
     @JsonIgnore
     public String getValue()
     {
-        return String.format(Locale.GERMAN, "%.2f €", value);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.GERMAN);
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.00",symbols);
+        return decimalFormat.format(value) + "€";
     }
 }

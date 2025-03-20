@@ -16,7 +16,7 @@
             <Insets top="10.0" />
          </VBox.margin></DatePicker>
         <HBox alignment="CENTER">
-            <Button fx:id="acceptTransactionButton" onAction="#AcceptButtonClicked" text="Buchen">
+            <Button fx:id="acceptTransactionButton" onAction="#AcceptButtonClicked" text="Speichern">
             <HBox.margin>
                <Insets right="5.0" top="10.0" />
             </HBox.margin></Button>

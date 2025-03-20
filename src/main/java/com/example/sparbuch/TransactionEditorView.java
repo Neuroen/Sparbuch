@@ -47,7 +47,11 @@ public class TransactionEditorView
     {
         teController.SetTransactionName(selectedTransaction.name);
         teController.SetTransactionValue(String.valueOf(selectedTransaction.value));
-        teController.SetTransactionDate(selectedTransaction.date);
+
+        if(selectedTransaction.date != null)
+        {
+            teController.SetTransactionDate(selectedTransaction.date);
+        }
     }
 
     public void Close(boolean state)
